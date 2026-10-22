@@ -1,0 +1,9 @@
+# Build directories
+/build/
+/cmake-build-*/
+
+# Local CMake configuration
+CMakeUserPresets.json
+
+# IDE-generated files
+.vs/
