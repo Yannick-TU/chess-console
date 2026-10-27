@@ -1,5 +1,23 @@
-#include <iostream>
+#include "chess/figure.hpp"
+#include "chess/king.hpp"
+#include "chess/queen.hpp"
+#include "chess/rook.hpp"
+#include "chess/bishop.hpp"
+#include "chess/knight.hpp"
+#include "chess/pawn.hpp"
 #include "chess/position.hpp"
+
+#include <iostream>
+#include <memory>
+#include <vector>
+#include <array>
+
+
+//Helper for color disp.
+const char* colorName(chess::Color color)
+{
+    return color == chess::Color::White ? "White" : "Black";
+}
 
 int main() {
     using namespace chess;
@@ -41,6 +59,18 @@ int main() {
 
     std::cout << "Invalid notation: "
               << !invalid << '\n';
+
+
+    //Create container for figures using the base class, we test each figure type
+    std::vector<std::unique_ptr<Figure>> figures;
+
+    //Create one black and one white King
+    figures.push_back(std::make_unique<King>(Color::White));
+    figures.push_back(std::make_unique<King>(Color::Black));
+
+    for (std::size_t i = 0; i < figures.size(); ++i) {
+        std::cout << "Figure " << figures[i]->symbol() << " Color: " << colorName(figures[i]->color()) << std::endl;
+    }
 
     return 0;
 

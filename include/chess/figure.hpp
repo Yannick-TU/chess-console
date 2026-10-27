@@ -1,9 +1,11 @@
-#pragma once
+#pragma once //Gibt an, dass der Compiler die Headerdatei nur einmal enthält, wenn eine Quellcodedatei kompiliert wird. https://learn.microsoft.com/de-de/cpp/preprocessor/once?view=msvc-170
 
 #include <iostream>
 #include <string>
 
-//Symbol and Color of a figure -> White King "K", Black pawn "p" etc.
+//Symbol Interface and Color of a figure -> White King "K", Black pawn "p" etc.
+//Abstract base class fpr the concrete classes like King etc.
+
 
 namespace chess {
 
@@ -22,6 +24,7 @@ class Figure {
         { }
     //Destructor, we have multiple different Figures later
     virtual ~Figure() = default;
+
     //Simple getter
     Color color() const {
         return color_;
