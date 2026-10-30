@@ -30,7 +30,7 @@ class Figure {
         return color_;
     }
     //Return the symbol of the figure
-    virtual char symbol () const = 0;
+    virtual char symbol() const = 0;
 
 };
 }
