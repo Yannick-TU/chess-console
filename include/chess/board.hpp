@@ -22,22 +22,22 @@ class Board {
     Board() = default;
 
     //Standard functions -> place, remove, set and initial setup
-    void putInitial_positions(); 
+    void put_initial_positions(); 
 
     //place a figure on a specific square
-    void place_figure (Position &const position, std::unique_ptr<Figure> figure);
+    void place_figure (Position const& position, std::unique_ptr<Figure> figure);
 
     //remove a figure from a square
-    std::unique_ptr<Figure> remove_figure (Position &const position);
+    std::unique_ptr<Figure> remove_figure (Position const& position);
 
     //return a pointer to the figure on a square
-    Figure* const figure_at (Position &const position);
+    Figure const* figure_at(Position const& position) const;
 
     //is a figure on that square?
     bool is_occupied (Position const& position) const;
 
     //count all figures on the board
-    size_t figure_count() const;
+    std::size_t figure_count() const;
 
 };
 }

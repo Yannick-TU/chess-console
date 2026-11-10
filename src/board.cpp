@@ -11,7 +11,7 @@
 
 namespace chess {
 //Implementing the functions defined for the chessboard
-    void Board::place_figure(Position &const position, std::unique_ptr<Figure> figure)
+    void Board::place_figure(Position const& position, std::unique_ptr<Figure> figure)
     {
         if (!position.isValid())
             throw std::out_of_range("Board position is not valid");
@@ -26,16 +26,20 @@ namespace chess {
         //Move ownership of figure to board, pointer is now empty
         square = std::move(figure);
     }
-    Figure* const Board::figure_at (Position &const position)
+    //return pointer to a figure (const Board)
+    Figure const* Board::figure_at(Position const& position) const
     {
         if (!position.isValid())
             throw std::out_of_range("Invalid board position");
+
         return squares_[position.row()][position.column()].get();
     }
 
+    // Check whether a square is occupied
+    bool Board::is_occupied(Position const& position) const
+    {
+        return figure_at(position) != nullptr;
+    }
 
-
-
-    
 }
 
