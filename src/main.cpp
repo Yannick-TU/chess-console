@@ -1,11 +1,4 @@
-#include "chess/figure.hpp"
-#include "chess/king.hpp"
-#include "chess/queen.hpp"
-#include "chess/rook.hpp"
-#include "chess/bishop.hpp"
-#include "chess/knight.hpp"
-#include "chess/pawn.hpp"
-#include "chess/position.hpp"
+#include "chess/board.hpp"
 
 #include <iostream>
 #include <memory>
@@ -13,65 +6,30 @@
 #include <array>
 
 
-//Helper for color disp.
-const char* colorName(chess::Color color)
-{
-    return color == chess::Color::White ? "White" : "Black";
-}
-
 int main() {
     using namespace chess;
 
-    //Auto: compiler works out the type
-    auto position = Position::fromAlgebraic("e4");
-    if (position) {
-        std::cout << "Row: " << position->row() << ", Column: " << position->column() << std::endl;
+    Board board;
+
+    board.put_initial_positions();
+
+    std::cout<<"Number of figures: " << board.figure_count() << std::endl;
+    
+    //print the board in each rank
+    for (int row = board_size-1; row >= 0; --row)
+    {
+        std::cout << row+1 << " ";
+        for (int column = 0; column < board_size; ++column)
+        {
+            Figure const* figure = board.figure_at(Position{row, column});
+            if (figure != nullptr)
+                std::cout << figure->symbol();
+            else
+                std::cout << ".";
+            std::cout << " ";
+        }
+        std::cout << row + 1 << '\n';
     }
-
-    auto position_2 = position->toAlgebraic();
-    if (position_2)     
-        std::cout << "Position_2" << *position_2 << std::endl;
-
-    Position p1{3,4};
-    Position p2{3,4};
-
-    std::cout << "Equal: " << (p1 == p2) << std::endl;
-    std::cout << "Not equal: " << (p1 != p2) << std::endl;
-
-      // Test 4: Offset
-    Position e2{1, 4};
-    Position e4{3, 4};
-
-    Offset movement = e4 - e2;
-
-    std::cout << "Offset: "
-              << movement.row << ", "
-              << movement.column << '\n';
-
-    // Test 5: Add offset
-    Position result = e2 + movement;
-
-    std::cout << "Correct result: "
-              << (result == e4) << '\n';
-
-    // Test 6: Invalid notation
-    auto invalid = Position::fromAlgebraic("z9");
-
-    std::cout << "Invalid notation: "
-              << !invalid << '\n';
-
-
-    //Create container for figures using the base class, we test each figure type
-    std::vector<std::unique_ptr<Figure>> figures;
-
-    //Create one black and one white King
-    figures.push_back(std::make_unique<King>(Color::White));
-    figures.push_back(std::make_unique<King>(Color::Black));
-
-    for (std::size_t i = 0; i < figures.size(); ++i) {
-        std::cout << "Figure " << figures[i]->symbol() << " Color: " << colorName(figures[i]->color()) << std::endl;
-    }
-
     return 0;
 
 }

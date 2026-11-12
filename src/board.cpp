@@ -35,10 +35,60 @@ namespace chess {
         return squares_[position.row()][position.column()].get();
     }
 
-    // Check whether a square is occupied
+    //check whether a square is occupied
     bool Board::is_occupied(Position const& position) const
     {
         return figure_at(position) != nullptr;
+    }
+
+    //remove figure from a square
+    std::unique_ptr<Figure> Board::remove_figure(Position const& position)
+    {
+        if (!position.isValid())
+            throw std::out_of_range("Invalid board position");
+        return std::move(squares_[position.row()][position.column()]);
+    }
+    //figure counter
+    std::size_t Board::figure_count() const
+    {
+        std::size_t count = 0;
+        for (auto const& row : squares_)
+        {
+            for (auto const& square : row)
+                if (square)
+                    ++count;
+        }
+        return count;
+    }
+
+    //setup initial board with piece positions
+    void Board::put_initial_positions() 
+    {
+        //clear all
+        for (auto& row : squares_)
+            for(auto & square : row)
+                square.reset();
+        //placing the pawns
+        for (int column = 0; column < board_size; ++column)
+        {
+            place_figure(Position{1, column}, std::make_unique<Pawn>(Color::White));
+            place_figure(Position{6, column}, std::make_unique<Pawn>(Color::Black));
+        }
+
+        //placing the back ranks -> lambda function, this == &board (pointer to current board object), hence this->place_figure function
+        auto place_back_rank = [this](int row, Color color)
+        {
+            place_figure(Position{row, 0}, std::make_unique<Rook>(color));
+            place_figure(Position{row, 1}, std::make_unique<Knight>(color));
+            place_figure(Position{row, 2}, std::make_unique<Bishop>(color));
+            place_figure(Position{row, 3}, std::make_unique<Queen>(color));
+            place_figure(Position{row, 4}, std::make_unique<King>(color));
+            place_figure(Position{row, 5}, std::make_unique<Bishop>(color));
+            place_figure(Position{row, 6}, std::make_unique<Knight>(color));
+            place_figure(Position{row, 7}, std::make_unique<Rook>(color));
+        };
+        place_back_rank(0, Color::White);
+        place_back_rank(7, Color::Black);
     }
 
 }
