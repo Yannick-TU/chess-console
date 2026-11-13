@@ -12,6 +12,8 @@ enable_testing()
 add_executable(chess_console
     src/main.cpp
     src/board.cpp
+    src/knight.cpp
+    src/king.cpp
 )
 set_property(TARGET chess_console PROPERTY CXX_STANDARD 20)
 

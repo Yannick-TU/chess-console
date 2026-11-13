@@ -15,5 +15,14 @@ class Bishop : public Figure {
         return color() == Color::White ? 'B' : 'b';
     }
 
+    //legal moves
+    //std::vector<Position> legal_moves(Position const& current_pos, Board const& board) const override;
+std::vector<Position> legal_moves(
+    Position const& current_pos,
+    Board const& board
+) const override
+{
+    return {};
+}
 };
 }

@@ -1,5 +1,5 @@
-#include "figure.hpp"
-
+#include "chess/figure.hpp"
+#include "chess/position.hpp"
 namespace chess {
     
 class King : public Figure {
@@ -14,6 +14,7 @@ class King : public Figure {
     char symbol () const override {
         return color() == Color::White ? 'K' : 'k';
     }
-
+    //legal move
+    std::vector<Position> legal_moves(Position const& current_pos, Board const& board) const override;
 };
 }

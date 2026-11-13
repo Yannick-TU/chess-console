@@ -14,6 +14,14 @@ class Queen : public Figure {
     char symbol () const override {
         return color() == Color::White ? 'Q' : 'q';
     }
-
+    //legal move
+    //std::vector<Position> legal_moves(Position const& current_pos, Board const& board) const override;
+std::vector<Position> legal_moves(
+    Position const& current_pos,
+    Board const& board
+) const override
+{
+    return {};
+}
 };
 }
