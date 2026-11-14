@@ -36,34 +36,60 @@
 
 
 #include <iostream>
+#include <memory>
 
 #include "chess/board.hpp"
-#include "chess/king.hpp"
+#include "chess/bishop.hpp"
+#include "chess/queen.hpp"
 #include "chess/pawn.hpp"
-#include <memory>
+
 int main()
 {
-    chess::Board board;
+    chess::Position position{3, 4}; // e4
 
-    chess::King king{chess::Color::White};
+    // Test 1: Bishop on empty board
+    chess::Board empty_board;
 
-    // King stands on e4
-    chess::Position current_pos{3, 4};
-    board.place_figure(chess::Position{4,4}, std::make_unique<chess::Pawn>(chess::Color::White));
-    auto moves = king.legal_moves(current_pos, board);
+    chess::Bishop bishop{chess::Color::White};
+    chess::Queen queen{chess::Color::White};
 
-    std::cout << "Possible King moves from e4:\n";
+    auto bishop_moves = bishop.legal_moves(position, empty_board);
+    auto queen_moves = queen.legal_moves(position, empty_board);
 
-    for (auto const& move : moves)
-    {
-        auto notation = move.toAlgebraic();
+    std::cout << "Bishop moves on empty board: "
+              << bishop_moves.size() << '\n';
 
-        if (notation)
-            std::cout << *notation << '\n';
-    }
+    std::cout << "Queen moves on empty board: "
+              << queen_moves.size() << '\n';
 
-    std::cout << "\nNumber of possible moves: "
-              << moves.size() << '\n';
+
+    // Test 2: Add obstacles
+    chess::Board blocked_board;
+
+    blocked_board.place_figure(
+        chess::Position{5, 6},
+        std::make_unique<chess::Pawn>(chess::Color::White)
+    );
+
+    blocked_board.place_figure(
+        chess::Position{5, 2},
+        std::make_unique<chess::Pawn>(chess::Color::Black)
+    );
+
+
+    auto blocked_bishop_moves =
+        bishop.legal_moves(position, blocked_board);
+
+    auto blocked_queen_moves =
+        queen.legal_moves(position, blocked_board);
+
+
+    std::cout << "\nBishop moves with obstacles: "
+              << blocked_bishop_moves.size() << '\n';
+
+    std::cout << "Queen moves with obstacles: "
+              << blocked_queen_moves.size() << '\n';
+
 
     return 0;
 }

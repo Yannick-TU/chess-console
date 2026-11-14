@@ -15,14 +15,6 @@ class Pawn : public Figure {
         return color() == Color::White ? 'P' : 'p';
     }
     //legal move
-    //std::vector<Position> legal_moves(Position const& current_pos, Board const& board) const override;
-std::vector<Position> legal_moves(
-    Position const& current_pos,
-    Board const& board
-) const override
-{
-    return {};
-}
-
+    std::vector<Position> legal_moves(Position const& current_pos, Board const& board) const override;
 };
 }

@@ -65,6 +65,7 @@ namespace chess {
     void Board::put_initial_positions() 
     {
         //clear all
+        en_passant_target_.reset();
         for (auto& row : squares_)
             for(auto & square : row)
                 square.reset();
@@ -90,6 +91,18 @@ namespace chess {
         place_back_rank(0, Color::White);
         place_back_rank(7, Color::Black);
     }
+    //en passant
+    std::optional<Position> Board::en_passant_target() const
+    {
+        return en_passant_target_;
+    }
 
+    void Board::set_en_passant_target(std::optional<Position> target)
+    {
+        if (target && !target->isValid())
+            throw std::out_of_range("Invalid en passant target");
+
+        en_passant_target_ = target;
+    }
 }
 

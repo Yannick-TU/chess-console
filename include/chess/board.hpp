@@ -3,6 +3,7 @@
 #include <array>
 #include <cstddef>
 #include <memory>
+#include <optional>
 #include "chess/figure.hpp"
 #include "chess/position.hpp"
 
@@ -15,7 +16,9 @@ class Board {
 
     //Chessboard containing pointers to figures 
     std::array<std::array<std::unique_ptr<Figure>,board_size>,board_size> squares_{};
-
+    
+    //en passant capture square
+    std::optional<Position> en_passant_target_{};
     public:
 
     //Constructor
@@ -39,5 +42,10 @@ class Board {
     //count all figures on the board
     std::size_t figure_count() const;
 
+    //get current en passant target
+    std::optional<Position> en_passant_target() const;
+
+    //update en passant target
+    void set_en_passant_target(std::optional<Position> target);
 };
 }

@@ -48,7 +48,7 @@ public:
 
     /*** Conversion from Algebraic to position notation and vice versa ***/
 
-    static std::optional<Position> fromAlgebraic (std::string const & str) {
+    static std::optional<Position> fromAlgebraic (std::string const& str) {
         if (str.size() != 2) 
             return std::nullopt;
         
@@ -79,11 +79,11 @@ public:
     friend bool operator==(Position const&, Position const&) = default;
 
     //Substract two positions -> the offeset
-    friend Offset operator - (Position const & first, Position const & second){
+    friend Offset operator - (Position const& first, Position const& second){
         return {first.row_ - second.row_, first.column_ - second.column_};
     }
     //Add an offset to a position
-    friend Position operator + (Position const & pos, Offset const & offset){
+    friend Position operator + (Position const& pos, Offset const& offset){
         return {pos.row_ + offset.row, pos.column_ + offset.column};
     }
 
