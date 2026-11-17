@@ -47,5 +47,8 @@ class Board {
 
     //update en passant target
     void set_en_passant_target(std::optional<Position> target);
+
+    //move figure from one place to another
+    std::unique_ptr<Figure> move_figure(Position const& from, Position const& to);
 };
 }

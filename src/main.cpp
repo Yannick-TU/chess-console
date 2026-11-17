@@ -1,5 +1,4 @@
 #include "chess/board.hpp"
-
 #include <iostream>
 #include <memory>
 #include <vector>

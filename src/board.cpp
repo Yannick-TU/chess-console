@@ -104,5 +104,69 @@ namespace chess {
 
         en_passant_target_ = target;
     }
+
+    std::unique_ptr<Figure> Board::move_figure(Position const& from, Position const& to)
+    {
+        if (!from.isValid() && !to.isValid())
+            throw std::out_of_range("Positions are invalid");
+        if (from == to)
+            throw std::invalid_argument("Both fields are identical");
+        
+        auto& from_square = squares_[from.row()][from.column()];
+        auto& to_square = squares_[to.row()][to.column()];
+
+        if (!from_square)
+            throw std::logic_error("No figure on that square");
+        
+        Figure const* moving_figure = from_square.get();
+        //is one of our own figures on the target square?
+        if(to_square && to_square->color() == moving_figure->color())
+            throw std::logic_error("can't capture our own figure");
+        
+        //is this an en passant capture? Then our pawn captures on a different square that it that it than stands on
+        auto const& moving_pawn = dynamic_cast<Pawn const*>(moving_figure);
+        const int direction = moving_figure->color() == Color::White ? 1 : -1;
+
+        //we caputre diagonally, left or right
+        const bool is_en_passant = moving_pawn != nullptr && !to_square && en_passant_target_ && to == *en_passant_target_
+        && to.row() == from.row() + direction && (to.column() == from.column() + 1 || to.column() == from.column() - 1);
+
+        //what figure, if, have we captured
+        std::unique_ptr<Figure> captured;
+        
+        if (is_en_passant)
+        {
+            Position capture_pos{from.row(), to.column()};
+            auto& capture_square = squares_[capture_pos.row()][capture_pos.column()];
+
+            //is this an enemys pawn?
+            auto const& captured_pawn = dynamic_cast<Pawn const*>(capture_square.get());
+            if (captured_pawn == nullptr || captured_pawn->color() == moving_pawn->color())
+                throw std::logic_error("Invalid en passant capture");
+            
+            //removng the pawn
+            captured = std::move(capture_square);
+        }
+        else
+        {
+            //normal capture
+            captured = std::move(to_square);
+        }
+        //we move figure to target square and overwrite the old one
+        to_square = std::move(from_square);
+
+
+
+        en_passant_target_.reset();
+        //set new en passant target after pawn double move, if this happend
+        if (moving_pawn != nullptr)
+        {
+            const int starting_row = moving_pawn->color() == Color::White ? 1 : 6;
+            if (from.row() == starting_row && to.row() == from.row() + 2 * direction && from.column() == to.column())
+                en_passant_target_ = Position{(from.row() + to.row())/2, from.column()};
+        }
+        return captured;
+    }
+
 }
 
