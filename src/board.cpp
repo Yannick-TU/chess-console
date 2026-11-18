@@ -10,7 +10,8 @@
 #include <utility>
 
 namespace chess {
-//Implementing the functions defined for the chessboard
+
+    //implementing the functions defined for the chessboard
     void Board::place_figure(Position const& position, std::unique_ptr<Figure> figure)
     {
         if (!position.isValid())
@@ -19,13 +20,13 @@ namespace chess {
             throw std::invalid_argument("Cannot place a null figure");
         
         auto& square = squares_[position.row()][position.column()];
-
         if (square)
             throw std::logic_error("Position is occupied");
 
         //Move ownership of figure to board, pointer is now empty
         square = std::move(figure);
     }
+    
     //return pointer to a figure (const Board)
     Figure const* Board::figure_at(Position const& position) const
     {
@@ -107,7 +108,7 @@ namespace chess {
 
     std::unique_ptr<Figure> Board::move_figure(Position const& from, Position const& to)
     {
-        if (!from.isValid() && !to.isValid())
+        if (!from.isValid() || !to.isValid())
             throw std::out_of_range("Positions are invalid");
         if (from == to)
             throw std::invalid_argument("Both fields are identical");
@@ -167,6 +168,15 @@ namespace chess {
         }
         return captured;
     }
+    //copy the whole board
+    Board::Board(Board const& other)
+    : en_passant_target_(other.en_passant_target_)
+    {
+        for (std::size_t row = 0; row < board_size; ++row)
+            for (std::size_t column = 0; column < board_size; ++column)
+                if (other.squares_[row][column])
+                    squares_[row][column] = other.squares_[row][column]->clone();
 
+    }
 }
 

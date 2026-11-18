@@ -18,6 +18,7 @@ add_executable(chess_console
     src/queen.cpp
     src/bishop.cpp
     src/pawn.cpp
+    src/chess_game.cpp
 )
 set_property(TARGET chess_console PROPERTY CXX_STANDARD 20)
 

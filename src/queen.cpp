@@ -2,6 +2,7 @@
 #include "chess/board.hpp"
 
 #include <array>
+#include <cstdlib>
 
 namespace chess {
 
@@ -41,5 +42,30 @@ namespace chess {
             }
         }
         return possible_moves;
+    }
+    bool Queen::attacks(Position const& current_pos, Position const& target, Board const& board) const
+    {
+        if (current_pos == target || !current_pos.isValid() || !target.isValid())
+            return false;
+
+        const int row_diff = target.row() - current_pos.row();
+        const int column_diff = target.column() - current_pos.column();
+
+        const bool straight = row_diff == 0 || column_diff == 0;
+        const bool diagonal = std::abs(row_diff) == std::abs(column_diff);
+
+        if (!straight && !diagonal)
+            return false;
+
+        Offset step{(row_diff > 0) - (row_diff < 0), (column_diff > 0) - (column_diff < 0)};
+        Position square = current_pos + step;
+
+        while (square != target)
+        {
+            if (board.is_occupied(square))
+                return false;
+            square = square + step;
+        }
+        return true;
     }
 }

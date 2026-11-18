@@ -2,6 +2,7 @@
 #include "chess/board.hpp"
 
 #include <array>
+#include <cstdlib>
 
 namespace chess {
 
@@ -53,6 +54,13 @@ namespace chess {
             }
         }
         return possible_moves;
+    }
+    bool Pawn::attacks(Position const& current_pos, Position const& target, Board const&) const
+    {
+        const int direction = color() == Color::White ? 1 : -1;
+        const int row_diff = target.row() - current_pos.row();
+        const int column_diff = std::abs(target.column() - current_pos.column());
+        return row_diff == direction && column_diff == 1;
     }
 }
  

@@ -16,76 +16,79 @@ namespace chess {
     };
 
 
-class Position {
+    class Position {
 
-    // row number on the chessboard
-    int row_;
-    // column number on the chessboard
-    int column_;
+        // row number on the chessboard
+        int row_{0};
+        // column number on the chessboard
+        int column_{0};
+    public:
+        /*** Constructors ***/
+        Position()
+        { }
 
-public:
-    /*** Constructors ***/
-    Position()
-    { }
+        // Init. of coordinates/position, e.g. (1,4)
+        Position(int row, int column)
+            : row_(row),
+            column_(column)
+        {}
+        
+        /*** Get Methods ***/
+        int column() const
+        { return column_; }
+        
+        int row() const
+        { return row_; }
 
-    // Init. of coordinates/position, e.g. (1,4)
-    Position(int row, int column)
-        : row_(row),
-          column_(column)
-    {}
+        /*** Quick valdiation ***/
+        bool isValid() const 
+        {
+            return row_ >= 0 && row_ < board_size && column_ >= 0 && column_ < board_size;
+        }
+
+        /*** Conversion from Algebraic to position notation and vice versa ***/
+
+        static std::optional<Position> fromAlgebraic (std::string const& str) 
+        {
+            if (str.size() != 2) 
+                return std::nullopt;
+            
+            char letter = str[0];
+            char number = str[1];
+
+            // Check if inputs are valid 
+            if (letter < 'a' || letter > 'h' || number <'1' || number > '8')
+                return std::nullopt;
+
+            return Position{number - '1', letter - 'a'};
+        }
+
+        std::optional<std::string> toAlgebraic () const {
+            if (!isValid()) 
+                return std::nullopt;
+            
+            std::string str;
+            
+            str += static_cast<char>(column_ + 'a');
+            str += static_cast<char>(row_ + '1');
     
-    /*** Get Methods ***/
-    int column() const
-    { return column_; }
-    
-    int row() const
-    { return row_; }
+            return str;
+        }
 
-    /*** Quick valdiation ***/
-    bool isValid() const {
-        return row_ >= 0 && row_ < board_size && column_ >= 0 && column_ < board_size;
-    }
+        /*** Overloading some operators to compute new positions after a move ***/
 
-    /*** Conversion from Algebraic to position notation and vice versa ***/
+        friend bool operator==(Position const&, Position const&) = default;
 
-    static std::optional<Position> fromAlgebraic (std::string const& str) {
-        if (str.size() != 2) 
-            return std::nullopt;
-        
-        char letter = str[0];
-        char number = str[1];
+        //Substract two positions -> the offeset
+        friend Offset operator - (Position const& first, Position const& second)
+        {
+            return {first.row_ - second.row_, first.column_ - second.column_};
+        }
+        //Add an offset to a position
+        friend Position operator + (Position const& pos, Offset const& offset)
+        {
+            return {pos.row_ + offset.row, pos.column_ + offset.column};
+        }
 
-        // Check if inputs are valid 
-        if (letter < 'a' || letter > 'h' || number <'1' || number > '8')
-            return std::nullopt;
-
-        return Position{letter - 'a', number - '1'};
-    }
-
-    std::optional<std::string> toAlgebraic () const {
-        if (!isValid()) 
-            return std::nullopt;
-        
-        std::string str;
-        
-        str += static_cast<char>(column_ + 'a');
-        str += static_cast<char>(row_ + '1');
-
-        return str;
-    }
-
-    /*** Overloading some operators to compute new positions after a move ***/
-
-    friend bool operator==(Position const&, Position const&) = default;
-
-    //Substract two positions -> the offeset
-    friend Offset operator - (Position const& first, Position const& second){
-        return {first.row_ - second.row_, first.column_ - second.column_};
-    }
-    //Add an offset to a position
-    friend Position operator + (Position const& pos, Offset const& offset){
-        return {pos.row_ + offset.row, pos.column_ + offset.column};
-    }
-
-};
+    };
 }

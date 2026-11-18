@@ -1,6 +1,7 @@
 #include "chess/king.hpp"
 #include "chess/board.hpp"
 
+#include <cstdlib>
 #include <array>
 
 namespace chess {
@@ -34,5 +35,13 @@ namespace chess {
                 possible_moves.push_back(target); 
         }
         return possible_moves;
+    }
+    //King attacks each square that is around him
+    bool King::attacks(Position const& current_pos, Position const& target, Board const& board) const
+    {
+        const int row_diff = std::abs(target.row() - current_pos.row());
+        const int column_diff = std::abs(target.column() - current_pos.column());
+            
+        return row_diff <= 1 && column_diff <= 1 && (row_diff != 0 || column_diff != 0);
     }
 }
