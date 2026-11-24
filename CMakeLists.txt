@@ -24,4 +24,3 @@ set_property(TARGET chess_console PROPERTY CXX_STANDARD 20)
 
 target_include_directories(chess_console PRIVATE include)
 
-

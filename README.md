@@ -101,7 +101,7 @@ Enter moves using algebraic chess notation: e2 e4
 
 Polymorphism allows different chess pieces to be handled through a common interface. Smart pointers (std::unique_ptr) are used to manage figure ownership and memory.
 
-## Stillig missing
+## Still missing
 
 ome additional official draw conditions are not yet implemented:
 - The 50-move rule
