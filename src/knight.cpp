@@ -25,7 +25,7 @@ namespace chess {
         //onto square with same colored figure and if square is oocupied by different color figure, delete that figure
         for (Offset const& offset : knight_offsets) //const& -> no unecessary copies of offsets
         {
-            //new position -> we use our overloaded + operator 
+            //new position
             Position target = current_pos + offset;
             //board boundaries
             if (!target.isValid())

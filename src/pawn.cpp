@@ -18,14 +18,16 @@ namespace chess {
         if(one_step.isValid() && !board.is_occupied(one_step))
         {
             possible_moves.push_back(one_step);
+
             //if pawn hasnt moved yet it can move 2 squares at once
             if (current_pos.row() == starting_row)
             {
                 Position two_steps = one_step + Offset{direction,0};
-                if (one_step.isValid() && !board.is_occupied(two_steps))
+                if (two_steps.isValid() && !board.is_occupied(two_steps))
                     possible_moves.push_back(two_steps);
             }
         }
+        
         //diagonal captures and en passant
         std::array<int, 2> capture_directions{-1,1};
         auto ep_target = board.en_passant_target();

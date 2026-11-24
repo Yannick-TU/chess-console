@@ -22,25 +22,25 @@ namespace chess {
         int row_{0};
         // column number on the chessboard
         int column_{0};
+
     public:
-        /*** Constructors ***/
+
         Position()
         { }
 
-        // Init. of coordinates/position, e.g. (1,4)
+        //Init. of coordinates/position, e.g. (1,4)
         Position(int row, int column)
             : row_(row),
             column_(column)
         {}
         
-        /*** Get Methods ***/
         int column() const
         { return column_; }
         
         int row() const
         { return row_; }
 
-        /*** Quick valdiation ***/
+        //check if a position is valid
         bool isValid() const 
         {
             return row_ >= 0 && row_ < board_size && column_ >= 0 && column_ < board_size;
@@ -56,7 +56,7 @@ namespace chess {
             char letter = str[0];
             char number = str[1];
 
-            // Check if inputs are valid 
+            //check if inputs are valid 
             if (letter < 'a' || letter > 'h' || number <'1' || number > '8')
                 return std::nullopt;
 

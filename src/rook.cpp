@@ -9,8 +9,7 @@ namespace chess {
     std::vector<Position> Rook::legal_moves(Position const& current_pos, Board const& board) const
     {
         std::vector<Position> possible_moves;
-        //The rook can move "unlimited" squares in the board, if it hits a enemy figure, it stops there. It cannot pass through own figures.
-        //Rook directions
+        //The rook can move "unlimited" squares on the board
         std::array<Offset, 4> rook_offsets{
             Offset{-1, 0},
             Offset{1, 0},

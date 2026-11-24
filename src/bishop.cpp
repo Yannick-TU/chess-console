@@ -17,6 +17,7 @@ namespace chess {
             Offset{-1, 1},
             Offset{-1, -1}
         };
+        
         //we run until we hit a figure or the edge of the board
         for (Offset const& offset : bishop_offsets)
         {

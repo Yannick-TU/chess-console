@@ -1,15 +1,40 @@
 # Build directories
 /build/
 /cmake-build-*/
+out/
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Testing/
+build.ninja
+.ninja_deps
+.ninja_log
+
+# Compiled binaries and object files
+*.exe
+*.dll
+*.so
+*.dylib
+*.o
+*.obj
+*.a
+*.lib
+*.pdb
+*.ilk
+
+# IDE files
+.vs/
+.idea/
 
 # Local CMake configuration
 CMakeUserPresets.json
 
-# IDE-generated files
-.vs/
-
-# Debug symbols
-*.pdb
-
 # Temporary files
 *.tmp
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

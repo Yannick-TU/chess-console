@@ -1,12 +1,9 @@
 /*
 Console Chess for two players on the same device
     Input: e2 e4 (start square and target square)
-    Rochade: e1 g1 (moves the king two squares)
+    Castling: e1 g1 (moves the king two squares)
     Promotion: e7 e8 q (q=Queen, r=Rook, b=Bishop, n=Knight; if no input, it is asked for one)
-    Commands: Help, End
-
-    Compilation example:
-    g++ -std=c++20 -Wall -Wextra -I include src/*.cpp main.cpp -o chess 
+    Commands: Help, Quit
 */
  
 #include "chess/chess_game.hpp"
@@ -120,7 +117,7 @@ int main()
  
         if (from_text.empty())
             continue;
-        if (from_text == "end")
+        if (from_text == "quit")
             break;
         if (from_text == "help")
         {

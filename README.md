@@ -1,6 +1,6 @@
 # Chess Console
 
-A chess game played in a console programmed in C++.
+A two-player, console-based chess game written in C++20.
 
 ## About
 
@@ -14,6 +14,7 @@ The goal is to implement a playable chess game with a class-based structure.
 - CMake
 - Git
 - GitHub
+- GitHub Actions
 
 ## Idea
 

@@ -11,7 +11,7 @@
 
 namespace chess {
 
-    //implementing the functions defined for the chessboard
+    //place a figure on the board
     void Board::place_figure(Position const& position, std::unique_ptr<Figure> figure)
     {
         if (!position.isValid())
@@ -27,7 +27,7 @@ namespace chess {
         square = std::move(figure);
     }
     
-    //return pointer to a figure (const Board)
+    //return pointer to a figure
     Figure const* Board::figure_at(Position const& position) const
     {
         if (!position.isValid())
@@ -49,6 +49,7 @@ namespace chess {
             throw std::out_of_range("Invalid board position");
         return std::move(squares_[position.row()][position.column()]);
     }
+
     //figure counter
     std::size_t Board::figure_count() const
     {
@@ -70,6 +71,7 @@ namespace chess {
         for (auto& row : squares_)
             for(auto & square : row)
                 square.reset();
+                
         //placing the pawns
         for (int column = 0; column < board_size; ++column)
         {
@@ -77,7 +79,7 @@ namespace chess {
             place_figure(Position{6, column}, std::make_unique<Pawn>(Color::Black));
         }
 
-        //placing the back ranks -> lambda function, this == &board (pointer to current board object), hence this->place_figure function
+        //placing the back ranks
         auto place_back_rank = [this](int row, Color color)
         {
             place_figure(Position{row, 0}, std::make_unique<Rook>(color));
@@ -92,6 +94,7 @@ namespace chess {
         place_back_rank(0, Color::White);
         place_back_rank(7, Color::Black);
     }
+
     //en passant
     std::optional<Position> Board::en_passant_target() const
     {
@@ -120,6 +123,7 @@ namespace chess {
             throw std::logic_error("No figure on that square");
         
         Figure const* moving_figure = from_square.get();
+
         //is one of our own figures on the target square?
         if(to_square && to_square->color() == moving_figure->color())
             throw std::logic_error("can't capture our own figure");
@@ -128,7 +132,7 @@ namespace chess {
         auto const& moving_pawn = dynamic_cast<Pawn const*>(moving_figure);
         const int direction = moving_figure->color() == Color::White ? 1 : -1;
 
-        //we caputre diagonally, left or right
+        //we capture diagonally, left or right
         const bool is_en_passant = moving_pawn != nullptr && !to_square && en_passant_target_ && to == *en_passant_target_
         && to.row() == from.row() + direction && (to.column() == from.column() + 1 || to.column() == from.column() - 1);
 
@@ -145,7 +149,7 @@ namespace chess {
             if (captured_pawn == nullptr || captured_pawn->color() == moving_pawn->color())
                 throw std::logic_error("Invalid en passant capture");
             
-            //removng the pawn
+            //removing the pawn
             captured = std::move(capture_square);
         }
         else
@@ -155,8 +159,6 @@ namespace chess {
         }
         //we move figure to target square and overwrite the old one
         to_square = std::move(from_square);
-
-
 
         en_passant_target_.reset();
         //set new en passant target after pawn double move, if this happend

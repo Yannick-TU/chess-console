@@ -16,6 +16,7 @@ namespace chess {
         char symbol () const override {
             return color() == Color::White ? 'P' : 'p';
         }
+        
         //legal move
         std::vector<Position> legal_moves(Position const& current_pos, Board const& board) const override;
 
