@@ -99,7 +99,7 @@ Enter moves using algebraic chess notation: e2 e4
 
 - Position: Represents board coordinates and handles coordinate conversions.
 
-Polymorphism allows different chess pieces to be handled through a common interface. Smart pointers (std::unique_ptr) are used to manage figure ownership and memory.
+- Smart pointers (std::unique_ptr) are used to manage figure ownership and memory.
 
 ## Still missing
 
