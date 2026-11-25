@@ -11,6 +11,7 @@
 #include <memory>
 #include <stdexcept>
 
+// promotion piece
 namespace {
     std::unique_ptr<chess::Figure> make_promoted_figure(chess::Promo_piece promotion,
                                                         chess::Color color) {
@@ -167,6 +168,7 @@ namespace chess {
         return false;
     }
 
+    // is the castle move valid?
     bool Chess_game::can_castle(Color color, bool kingside, Board const& board) const {
         int row = (color == Color::White) ? 0 : 7;
         Position king_from{row, 4};
@@ -176,7 +178,7 @@ namespace chess {
 
         Position rook_to = kingside ? Position{row, 5} : Position{row, 3};
 
-        // Check castling rights.
+        // check castling rights
         bool allowed = false;
 
         if (color == Color::White) {
@@ -188,7 +190,7 @@ namespace chess {
         if (!allowed)
             return false;
 
-        // Check whether king and rook are on their initial squares.
+        // check whether king and rook are on their initial squares
         auto king = dynamic_cast<King const*>(board.figure_at(king_from));
         auto rook = dynamic_cast<Rook const*>(board.figure_at(rook_from));
 
@@ -198,7 +200,7 @@ namespace chess {
         if (king->color() != color || rook->color() != color)
             return false;
 
-        // Check whether the squares between king and rook are empty.
+        // check whether the squares between king and rook are empty
         if (kingside) {
             if (board.is_occupied(Position{row, 5}) || board.is_occupied(Position{row, 6})) {
                 return false;
@@ -210,11 +212,11 @@ namespace chess {
             }
         }
 
-        // The king must not currently be in check.
+        // the king must not currently be in check
         if (is_in_check(color, board))
             return false;
 
-        // Simulate the king moving through the intermediate square.
+        // simulate king moving through the intermediate square
         Position transit = kingside ? Position{row, 5} : Position{row, 3};
 
         Board transit_board = board;
@@ -223,7 +225,7 @@ namespace chess {
         if (is_in_check(color, transit_board))
             return false;
 
-        // Simulate the complete castling move.
+        // simulate the complete castling move
         Board final_board = board;
 
         final_board.move_figure(king_from, king_to);
@@ -243,8 +245,8 @@ namespace chess {
         if (current_status == Game_status::Checkmate || current_status == Game_status::Stalemate)
             return false;
 
-        // we check for valid position, if there is a figure to be moved and if that figure has the
-        // right color matching the player
+        // we check for valid position, if there is a figure to be moved and if that figure has a
+        // color matching the player
         if (!from.isValid() || !to.isValid() || from == to)
             return false;
 

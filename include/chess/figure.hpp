@@ -4,11 +4,11 @@
 #include <memory>
 #include <vector>
 
-// symbol Interface and Color of a figure -> White King "K", Black pawn "p" etc.
-// abstract base class for the concrete classes like King etc.
+// Symbol Interface and Color of a figure -> White King "K", Black pawn "p" etc.
+// Abstract base class for the concrete classes like King etc.
 
 namespace chess {
-    // Forward declaration
+
     class Board;
 
     enum class Color { White, Black };
@@ -27,14 +27,14 @@ namespace chess {
         // Return the symbol of the figure
         virtual char symbol() const = 0;
 
-        // is a move legal? Given a current position and the current state of the board
+        // Is a move legal? Given a current position and the current state of the board
         virtual std::vector<Position> legal_moves(Position const& current_pos,
                                                   Board const& board) const = 0;
 
-        // create a copy of a concrete figure
+        // Create a copy of a concrete figure
         virtual std::unique_ptr<Figure> clone() const = 0;
 
-        // what figure attacks which squares
+        // What figure attacks which squares
         virtual bool attacks(Position const& current_pos, Position const& traget,
                              Board const& board) const = 0;
     };

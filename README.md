@@ -103,7 +103,7 @@ Polymorphism allows different chess pieces to be handled through a common interf
 
 ## Still missing
 
-ome additional official draw conditions are not yet implemented:
+Some additional official draw conditions are not yet implemented:
 - The 50-move rule
 - Threefold repetition
 - Draw due to insufficient material

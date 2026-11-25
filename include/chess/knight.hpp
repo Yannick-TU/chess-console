@@ -1,7 +1,6 @@
 #pragma once
 
 #include "chess/figure.hpp"
-#include "chess/position.hpp"
 
 //(K)night
 namespace chess {
@@ -15,7 +14,7 @@ namespace chess {
             return color() == Color::White ? 'N' : 'n';
         }
 
-        // legal move
+        // legal moves
         std::vector<Position> legal_moves(Position const& current_pos,
                                           Board const& board) const override;
 

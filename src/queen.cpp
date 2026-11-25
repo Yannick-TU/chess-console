@@ -9,7 +9,7 @@ namespace chess {
     std::vector<Position> Queen::legal_moves(Position const& current_pos,
                                              Board const& board) const {
         std::vector<Position> possible_moves;
-        // Queen can move both horizontal, vertical and diagonal
+        // Queen can move horizontal, vertical and diagonal
         std::array<Offset, 8> queen_offsets{
             Offset{-1, 1}, Offset{1, -1}, Offset{1, 1}, Offset{-1, -1},
             Offset{-1, 0}, Offset{0, -1}, Offset{1, 0}, Offset{0, 1},

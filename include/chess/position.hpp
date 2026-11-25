@@ -69,8 +69,7 @@ namespace chess {
             return str;
         }
 
-        /*** Overloading some operators to compute new positions after a move ***/
-
+        // Two positions are equal
         friend bool operator==(Position const&, Position const&) = default;
 
         // Substract two positions -> the offeset

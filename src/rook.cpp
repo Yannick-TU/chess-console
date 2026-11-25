@@ -8,7 +8,7 @@ namespace chess {
 
     std::vector<Position> Rook::legal_moves(Position const& current_pos, Board const& board) const {
         std::vector<Position> possible_moves;
-        // The rook can move "unlimited" squares on the board
+        // rook can move "unlimited" squares on the board
         std::array<Offset, 4> rook_offsets{
             Offset{-1, 0},
             Offset{1, 0},

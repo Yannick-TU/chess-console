@@ -98,6 +98,7 @@ namespace chess {
         en_passant_target_ = target;
     }
 
+    // move a figure
     std::unique_ptr<Figure> Board::move_figure(Position const& from, Position const& to) {
         if (!from.isValid() || !to.isValid())
             throw std::out_of_range("Positions are invalid");
@@ -116,8 +117,8 @@ namespace chess {
         if (to_square && to_square->color() == moving_figure->color())
             throw std::logic_error("can't capture our own figure");
 
-        // is this an en passant capture? Then our pawn captures on a different square that it that
-        // it than stands on
+        // is this an en passant capture? Then our pawn captures on a different square that it than
+        // stands on
         auto const& moving_pawn = dynamic_cast<Pawn const*>(moving_figure);
         const int direction = moving_figure->color() == Color::White ? 1 : -1;
 

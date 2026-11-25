@@ -10,7 +10,7 @@ namespace chess {
                                               Board const& board) const {
         std::vector<Position> possible_moves;
         // The bishop can move "unlimited" squares in the board, if it hits a enemy figure, it stops
-        // there. It cannot pass through own figures. bishop directions
+        // there. It cannot pass through own figures.
         std::array<Offset, 4> bishop_offsets{Offset{1, 1}, Offset{1, -1}, Offset{-1, 1},
                                              Offset{-1, -1}};
 

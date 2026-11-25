@@ -27,7 +27,7 @@ namespace chess {
         }
         return possible_moves;
     }
-    // King attacks each square that is around him
+    // king attacks each square that is around him
     bool King::attacks(Position const& current_pos, Position const& target,
                        Board const& board) const {
         const int row_diff = std::abs(target.row() - current_pos.row());

@@ -17,8 +17,7 @@ namespace chess {
         // check all possible positions, figure has to stay inbound of the board, cannot jump
         // onto square with same colored figure and if square is oocupied by different color figure,
         // delete that figure
-        for (Offset const& offset : knight_offsets) // const& -> no unecessary copies of offsets
-        {
+        for (Offset const& offset : knight_offsets) {
             // new position
             Position target = current_pos + offset;
             // board boundaries

@@ -9,11 +9,12 @@ namespace chess {
       public:
         explicit Queen(Color color) : Figure(color) {}
 
+        // Symbol is defined by color
         char symbol() const override {
             return color() == Color::White ? 'Q' : 'q';
         }
 
-        // legal move
+        // legal moves
         std::vector<Position> legal_moves(Position const& current_pos,
                                           Board const& board) const override;
 
